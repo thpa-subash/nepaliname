@@ -1,0 +1,27 @@
+<nz-header>
+  <div nz-row>
+    <div nz-col [nzXs]="{ span: 14 }" [nzLg]="{ span: 12, offset: 1 }">
+      <h1>Nepali Names</h1>
+    </div>
+
+    <div nz-col [nzXs]="{ span: 10 }" [nzLg]="{ span: 10, offset: 1 }">
+      <div class="header-right">
+        <!--<div class="notification">
+        <i nz-icon nzType="bell"></i>
+      </div>-->
+        <div class="user" nz-dropdown [nzDropdownMenu]="menu">
+          <i nz-icon nzType="user"></i>
+          <span class="header-username">Subash Thapa</span>
+        </div>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul class="user-dropdown" nz-menu nzSelectable>
+            <li nz-menu-item><i nz-icon nzType="user"></i>My Profile</li>
+            <li nz-menu-item><i nz-icon nzType="setting"></i> Settings</li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item><i nz-icon nzType="logout"></i> Logout</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </div>
+  </div>
+</nz-header>

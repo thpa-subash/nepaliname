@@ -1,0 +1,30 @@
+.user {
+  float: right !important;
+}
+.header-right {
+  width: 100%;
+
+  float: right !important;
+}
+.user-dropdown {
+  border-radius: 10px;
+  width: 160px;
+}
+.notification {
+}
+
+.header-username {
+  margin-left: 0.8rem;
+}
+nz-header {
+  background: #fff;
+}
+.layout {
+  min-height: 100vh;
+}
+@media (max-width: 700px) {
+  h1 {
+    font-size: 20px;
+    color: red;
+  }
+}

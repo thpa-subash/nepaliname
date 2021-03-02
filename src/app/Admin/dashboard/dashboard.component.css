@@ -1,0 +1,27 @@
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 360px;
+}
+nz-content {
+  margin: 16px;
+}
+
+.analysis {
+  margin: 10px 0px;
+}
+ant-card-head {
+  border-bottom: none !important;
+}
+nz-divider {
+  margin: 10px 0 !important;
+}
+nz-content {
+  margin: 24px 16px 0;
+}
+
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 360px;
+}

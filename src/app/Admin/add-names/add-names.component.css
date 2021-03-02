@@ -1,0 +1,52 @@
+.add-names {
+  margin: 16px;
+  padding: 24px;
+  background: #fff;
+  min-height: 360px;
+  position: relative;
+  width: 100%;
+}
+.name-header {
+  width: 100%;
+
+  display: inline-flex;
+  justify-content: space-between;
+}
+.add-button {
+}
+[nz-form] {
+  max-width: 600px;
+}
+.name-search {
+  width: 50%;
+  position: relative;
+
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  text-align: center;
+}
+.name-search input {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  position: relative;
+
+  justify-content: center;
+}
+nz-form-label {
+  font-weight: 700;
+}
+th {
+  font-size: 20px;
+}
+td {
+  font-size: 15px;
+  position: relative;
+}
+nzTitle {
+  font-size: 20px;
+}
+.save {
+  margin-right: 8px;
+}
