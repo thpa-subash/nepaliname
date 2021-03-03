@@ -10,18 +10,30 @@ nz-content {
 .analysis {
   margin: 10px 0px;
 }
-ant-card-head {
-  border-bottom: none !important;
-}
+
 nz-divider {
   margin: 10px 0 !important;
 }
-nz-content {
-  margin: 24px 16px 0;
+
+.layout {
+  min-height: 100vh;
 }
 
-.inner-content {
-  padding: 24px;
-  background: #fff;
-  min-height: 360px;
+.logo {
+  padding: 0px;
+  margin: 10px;
+}
+.logo img {
+  width: 100%;
+  height: 60px;
+}
+.logo h2 {
+  color: white;
+}
+nz-menu {
+  margin-top: 5%;
+}
+
+nz-footer {
+  text-align: center;
 }

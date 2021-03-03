@@ -1,3 +1,4 @@
+import { AuthGuard } from './Guard/auth.guard';
 import { ZorroModule } from './zorro/zorro.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,12 +16,11 @@ import en from '@angular/common/locales/en';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
-import { LayoutComponent } from './Admin/layout/layout.component';
+
 import { DashboardComponent } from './Admin/dashboard/dashboard.component';
 import { AddNamesComponent } from './Admin/add-names/add-names.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './Admin/login/login.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 
 registerLocaleData(en);
 const antDesignIcons = AllIcons as {
@@ -30,7 +30,14 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
   (key) => antDesignIcons[key]
 );
 @NgModule({
-  declarations: [AppComponent, LayoutComponent, DashboardComponent, AddNamesComponent, HeaderComponent, LoginComponent, SidebarComponent],
+  declarations: [
+    AppComponent,
+
+    DashboardComponent,
+    AddNamesComponent,
+    HeaderComponent,
+    LoginComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -45,6 +52,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     { provide: NZ_ICONS, useValue: icons },
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })

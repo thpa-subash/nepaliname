@@ -1,31 +1,22 @@
 <form nz-form class="login-form">
+  <h3>Login</h3>
   <nz-form-item>
     <nz-form-control nzErrorTip="Please input your username!">
       <nz-input-group nzPrefixIcon="user">
-        <input
-          type="text"
-          nz-input
-          formControlName="userName"
-          placeholder="Username"
-        />
+        <input type="text" nzSize="large" nz-input placeholder="Username" />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-control nzErrorTip="Please input your Password!">
       <nz-input-group nzPrefixIcon="lock">
-        <input
-          type="password"
-          nz-input
-          formControlName="password"
-          placeholder="Password"
-        />
+        <input type="password" nzSize="70px" nz-input placeholder="Password" />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
   <div nz-row class="login-form-margin">
     <div nz-col [nzSpan]="12">
-      <label nz-checkbox formControlName="remember">
+      <label nz-checkbox>
         <span>Remember me</span>
       </label>
     </div>

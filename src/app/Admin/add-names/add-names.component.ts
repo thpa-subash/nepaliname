@@ -1,10 +1,6 @@
+import { Names } from './../../Model/names';
 import { Component, OnInit } from '@angular/core';
-interface Person {
-  id: string;
-  name: string;
-  age: number;
-  address: string;
-}
+
 @Component({
   selector: 'app-add-names',
   templateUrl: './add-names.component.html',
@@ -16,7 +12,7 @@ export class AddNamesComponent implements OnInit {
   filteredOptions: any = [];
   isVisibleEdit = false;
   isVisibleTop = false;
-  editCache: { [key: string]: { edit: boolean; data: Person } } = {};
+  editCache: { [key: string]: { edit: boolean; data: Names } } = {};
   constructor() {
     this.options = this.listOfData;
     this.filteredOptions = this.options;
@@ -25,19 +21,22 @@ export class AddNamesComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-  listOfData: Person[] = [
+  listOfData: Names[] = [
     {
       id: '1',
       name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
+      nepali: 'subash',
+      gender: 'male',
+      description: 'New York No. 1 Lake Park',
     },
 
     {
-      id: '3',
-      name: 'Subash thapa',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
+      id: '2',
+      name: 'subash',
+      nepali: 'thapa',
+      gender: 'male',
+      description:
+        'New York No. 1 Lake Park fasjd aksdjf asdjl afjsldfjalsjdlfakjsld',
     },
   ];
   onChange(value: string): void {
@@ -47,19 +46,7 @@ export class AddNamesComponent implements OnInit {
     );
     // const value = (event.target as HTMLInputElement).value;
   }
-  showModalEdit(): void {
-    this.isVisibleEdit = true;
-  }
 
-  handleOkEdit(): void {
-    console.log('Button ok clicked!');
-    this.isVisibleEdit = false;
-  }
-
-  handleCancelEdit(): void {
-    console.log('Button cancel clicked!');
-    this.isVisibleEdit = false;
-  }
   showModalAdd(): void {
     this.isVisibleTop = true;
   }
@@ -85,7 +72,10 @@ export class AddNamesComponent implements OnInit {
   }
   saveEdit(id: string): void {
     const index = this.listOfData.findIndex((item) => item.id === id);
-    Object.assign(this.listOfData[index], this.editCache[id].data);
+
+    const dat = Object.assign(this.listOfData[index], this.editCache[id].data);
+    //call the serivce api to update the data;
+    console.log(dat);
     this.editCache[id].edit = false;
   }
   updateEditCache(): void {
