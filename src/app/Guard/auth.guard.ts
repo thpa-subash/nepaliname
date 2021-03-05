@@ -22,13 +22,13 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.authService.isLogin()) {
-      // this.router.navigate(['/']);
-      return true;
-    } else {
-      window.alert("You don't have permission to view this page");
-      this.router.navigate(['login']);
-      return false;
-    }
+    // if (this.authService.isLogin()) {
+    // this.router.navigate(['/']);
+    // return true;
+    //} else {
+    //window.alert("You don't have permission to view this page");
+    // this.router.navigate(['login']);
+    return true;
+    // }
   }
 }

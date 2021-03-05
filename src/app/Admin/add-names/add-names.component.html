@@ -6,6 +6,7 @@
         nz-button
         nzType="primary"
         nzSize="large"
+        nzShape="round"
         nzMask="true"
         [nzType]="'primary'"
         (click)="showModalAdd()"
@@ -105,11 +106,11 @@
     >
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Name in Nepali</th>
-          <th>Gender</th>
-          <th>Description</th>
-          <th>Action</th>
+          <th nzWidth="15%">Name</th>
+          <th nzWidth="15%">Name in Nepali</th>
+          <th nzWidth="10%">Gender</th>
+          <th nzWidth="45%">Meaning</th>
+          <th nzWidth="15%">Action</th>
         </tr>
       </thead>
 
@@ -159,9 +160,15 @@
               <a (click)="saveEdit(data.id)" class="save">Save</a>&nbsp;
               <a
                 nz-popconfirm
-                nzPopconfirmTitle="Sure to cancel?"
+                nzPopconfirmTitle="Sure to cancel ?"
                 (nzOnConfirm)="cancelEdit(data.id)"
                 >Cancel</a
+              >&nbsp;
+              <a
+                nz-popconfirm
+                nzPopconfirmTitle="Sure to Delete?"
+                (nzOnConfirm)="deleteEdit(data.id)"
+                >Delete</a
               >
             </td>
           </ng-template>

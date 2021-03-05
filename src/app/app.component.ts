@@ -1,4 +1,11 @@
+import { AuthService } from './Service/auth.service';
 import { Component } from '@angular/core';
+import {
+  OidcClientNotification,
+  OidcSecurityService,
+  PublicConfiguration,
+} from 'angular-auth-oidc-client';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,4 +23,9 @@ export class AppComponent {
     'Man charged over missing wedding girl.',
     'Los Angeles battles huge wildfires.',
   ];
+  constructor(
+    private authService: AuthService,
+    public oidcSecurityService: OidcSecurityService
+  ) {}
+  ngOnInit() {}
 }

@@ -1,3 +1,4 @@
+import { AppComponent } from './app.component';
 import { AuthGuard } from './Guard/auth.guard';
 import { LoginComponent } from './Admin/login/login.component';
 import { AddNamesComponent } from './Admin/add-names/add-names.component';
@@ -7,8 +8,8 @@ import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
-
+  { path: '', component: DashboardComponent },
+  { path: 'home', component: AddNamesComponent },
   { path: 'login', component: LoginComponent },
 ];
 

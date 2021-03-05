@@ -24,19 +24,36 @@ export class AddNamesComponent implements OnInit {
   listOfData: Names[] = [
     {
       id: '1',
-      name: 'John Brown',
-      nepali: 'subash',
-      gender: 'male',
-      description: 'New York No. 1 Lake Park',
+      name: 'aani',
+      nepali: 'आनी',
+      gender: 'female',
+      description:
+        'She was literally a woman and a poetess in Qastaniniyah (उनी शाब्दिक महिला थिइन र कस्तानिनियाहमा एक कवि थिइन)',
     },
 
     {
       id: '2',
-      name: 'subash',
-      nepali: 'thapa',
+      name: '	subash',
+      nepali: '	सुबाश',
       gender: 'male',
       description:
-        'New York No. 1 Lake Park fasjd aksdjf asdjl afjsldfjalsjdlfakjsld',
+        'Gift of god (भगवान को उपहार); Fresh smell (ताजा गन्ध); Fragrance (सुगन्ध)',
+    },
+    {
+      id: '3',
+      name: 'shekhar',
+      nepali: 'शेखर',
+      gender: 'male',
+      description:
+        'Peak (चुचुरो); Mountain (पहाड); Ultimate (अन्तिम); Lord Shiva (भगवान शिव)',
+    },
+    {
+      id: '3',
+      name: 'chandrashekhar',
+      nepali: 'चन्द्रशेखर',
+      gender: 'male',
+      description:
+        'One who holds moons in his hair (जसले आफ्नो कपालमा चन्द्रमा लगाउँछ); Lord Shiva (भगवान शिव)',
     },
   ];
   onChange(value: string): void {
@@ -61,6 +78,14 @@ export class AddNamesComponent implements OnInit {
   }
   startEdit(id: string): void {
     this.editCache[id].edit = true;
+  }
+  deleteEdit(id: string): void {
+    const index = this.listOfData.findIndex((item) => item.id === id);
+    console.log('i am clicked');
+    this.editCache[id] = {
+      data: { ...this.listOfData[index] },
+      edit: false,
+    };
   }
   cancelEdit(id: string): void {
     const index = this.listOfData.findIndex((item) => item.id === id);

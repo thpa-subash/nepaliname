@@ -1,4 +1,4 @@
-<nz-layout class="layout">
+<!--<nz-layout class="layout">
   <nz-sider nzCollapsible nzBreakpoint="md" [nzCollapsedWidth]="0">
     <div class="logo">
       <h2>Nepali Names</h2>
@@ -31,3 +31,29 @@
     <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
   </nz-layout>
 </nz-layout>
+-->
+<div>Welcome to home Route</div>
+
+<div *ngIf="isAuthenticated$ | async as isAuthenticated; else noAuth">
+  <button (click)="logout()">Logout</button>
+  <hr />
+
+  <br />
+
+  Is Authenticated: {{ isAuthenticated }}
+
+  <br />
+  userData
+  <pre>{{ userData$ | async | json }}</pre>
+
+  <br />
+</div>
+
+<ng-template #noAuth>
+  <button (click)="login()">Login</button>
+  <hr />
+</ng-template>
+
+<pre>
+  {{ secretData$ | async | json }}
+</pre>
