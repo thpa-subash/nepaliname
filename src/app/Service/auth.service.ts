@@ -8,6 +8,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 export class AuthService {
   constructor(private oidcSecurityService: OidcSecurityService) {}
   get isLoggedIn() {
+    // console.log(this.oidcSecurityService.isAuthenticated$);
     return this.oidcSecurityService.isAuthenticated$;
   }
 
@@ -16,14 +17,17 @@ export class AuthService {
   }
 
   get userData() {
+    // debugger;
+    console.log('user data' + this.oidcSecurityService.userData$);
     return this.oidcSecurityService.userData$;
   }
-
+  // check the user is authenticate or not
   checkAuth() {
     return this.oidcSecurityService.checkAuth();
   }
 
   doLogin() {
+    console.log(this.oidcSecurityService.authorize());
     return of(this.oidcSecurityService.authorize());
   }
 

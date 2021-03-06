@@ -1,11 +1,14 @@
 import { AuthService } from './Service/auth.service';
 import { Component } from '@angular/core';
+import { Observable, of } from 'rxjs';
+
 import {
   OidcClientNotification,
   OidcSecurityService,
   PublicConfiguration,
 } from 'angular-auth-oidc-client';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +17,10 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   title = 'NepaliName';
-
+  userData$: Observable<any>;
+  secretData$: Observable<any>;
+  isAuthenticated$: Observable<boolean>;
+  isauth: false;
   isCollapsed = false;
   data = [
     'Racing car sprays burning fuel into crowd.',
@@ -25,7 +31,22 @@ export class AppComponent {
   ];
   constructor(
     private authService: AuthService,
-    public oidcSecurityService: OidcSecurityService
+    private httpClient: HttpClient
   ) {}
-  ngOnInit() {}
+  ngOnInit() {
+    this.userData$ = this.authService.userData;
+    //check user is authenticated or not
+    this.isAuthenticated$ = this.authService.isLoggedIn;
+
+    this.secretData$ = this.httpClient
+      .get('https://id.nepalinames.com')
+      .pipe(catchError((error) => of(error)));
+  }
+  login() {
+    this.authService.doLogin();
+  }
+
+  logout() {
+    this.authService.signOut();
+  }
 }

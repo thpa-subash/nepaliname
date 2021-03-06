@@ -8,8 +8,13 @@ import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
-  { path: 'home', component: AddNamesComponent },
+  {
+    path: 'home',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    pathMatch: 'full',
+  },
+  // { path: 'home', component: AddNamesComponent },
   { path: 'login', component: LoginComponent },
 ];
 

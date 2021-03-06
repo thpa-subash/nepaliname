@@ -23,20 +23,5 @@ export class DashboardComponent implements OnInit {
     private httpClient: HttpClient
   ) {}
 
-  ngOnInit() {
-    this.userData$ = this.authService.userData;
-    this.isAuthenticated$ = this.authService.isLoggedIn;
-    console.log('wher am i ??????????????????????????????');
-    this.secretData$ = this.httpClient
-      .get('https://id.nepalinames.com')
-      .pipe(catchError((error) => of(error)));
-  }
-
-  login() {
-    this.authService.doLogin();
-  }
-
-  logout() {
-    this.authService.signOut();
-  }
+  ngOnInit() {}
 }

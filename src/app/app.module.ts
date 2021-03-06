@@ -40,13 +40,13 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
   return () =>
     oidcConfigService.withConfig({
       stsServer: 'https://id.nepalinames.com',
-      redirectUrl: window.location.origin + 'home',
+      redirectUrl: window.location.origin + '/home',
       postLogoutRedirectUri: window.location.origin,
       clientId: 'js',
-      scope: 'openid profile api1',
+      scope: 'openid profile',
       responseType: 'code',
       silentRenew: true,
-      silentRenewUrl: window.location.origin + 'home',
+      silentRenewUrl: window.location.origin + '/home',
       logLevel: LogLevel.Debug,
     });
 }
