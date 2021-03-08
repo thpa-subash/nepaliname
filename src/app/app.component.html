@@ -1,4 +1,4 @@
-<div class="nav">
+<!--<div class="nav">
   <ul nz-menu nzMode="horizontal">
     <li nz-menu-item nzSelected>Nepali Names</li>
     <li nz-menu-item nzDisabled>
@@ -49,30 +49,20 @@
       [routerLinkActive]="['link-active']"
     >
       <a (click)="logout()" class="nav-link text-dark">Logout</a>
-    </li>-->
-    <li
-      class="right"
-      nz-menu-item
-      *ngIf="isAuthenticated$ | async as isAuthenticated; else noAuth"
-    >
-      <a (click)="logout()" target="_blank" rel="noopener noreferrer">Logout</a>
     </li>
-    <ng-template #noAuth>
-      <button
-        (click)="login()"
-        style="right"
-        nz-button
-        [nzSize]="size"
-        nzType="primary"
-      >
-        Login
-      </button>
-      <hr />
-    </ng-template>
   </ul>
 </div>
 
-<h1>
-  <pre>{{ userData$ | async | json }}</pre>
-</h1>
+<h1></h1>-->
+<h1>DemoApp</h1>
+<p>You are logged in as {{ username }}.</p>
+<p>
+  <button (click)="login()">Log in</button>
+  <button (click)="logout()">Log out</button>
+  <button (click)="refresh()">Refresh</button>
+</p>
+<p>Access Token</p>
+<pre>{{ token | json }}</pre>
+<p>Claims</p>
+<pre>{{ claims | json }}</pre>
 <router-outlet></router-outlet>

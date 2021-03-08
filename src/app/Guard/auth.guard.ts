@@ -1,5 +1,6 @@
 import { AuthService } from './../Service/auth.service';
 import { Injectable } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private oauthService: OAuthService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,9 +23,10 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.authService.isLoggedIn) {
+    if (this.oauthService.hasValidIdToken()) {
       return true;
     } else {
+      this.router.navigate(['/login']);
       return false;
     }
     // this.router.navigate(['/']);

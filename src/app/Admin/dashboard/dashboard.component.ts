@@ -2,11 +2,6 @@ import { AuthService } from './../../Service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import {
-  OidcClientNotification,
-  OidcSecurityService,
-  PublicConfiguration,
-} from 'angular-auth-oidc-client';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 @Component({
