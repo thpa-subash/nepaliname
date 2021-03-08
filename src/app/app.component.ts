@@ -1,10 +1,15 @@
+import { authConfig } from './auth.config';
 import { AuthService } from './Service/auth.service';
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
-
+import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { OAuthService, OAuthErrorEvent } from 'angular-oauth2-oidc';
+import {
+  OAuthService,
+  JwksValidationHandler,
+  OAuthErrorEvent,
+} from 'angular-oauth2-oidc';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -29,39 +34,32 @@ export class AppComponent {
     'Man charged over missing wedding girl.',
     'Los Angeles battles huge wildfires.',
   ];
-  constructor(private oauthService: OAuthService) {
-    oauthService.events.subscribe((e) =>
-      e instanceof OAuthErrorEvent ? console.error(e) : console.warn(e)
-    );
+  constructor(private router: Router, private oauthService: OAuthService) {
+    this.configureWithNewConfigApi();
+  }
+  private async configureWithNewConfigApi() {
+    this.oauthService.configure(authConfig);
+    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
-    // Load information from Auth0 (could also be configured manually)
-    oauthService
-      .loadDiscoveryDocument()
-
-      // See if the hash fragment contains tokens (when user got redirected back)
-      .then(() => oauthService.tryLogin())
-
-      // If we're still not logged in yet, try with a silent refresh:
-      .then(() => {
-        if (!oauthService.hasValidAccessToken()) {
-          return oauthService.silentRefresh();
-        }
-      })
-
-      // Get username, if possible.
-      .then(() => {
-        if (oauthService.getIdentityClaims()) {
-          this.username = oauthService.getIdentityClaims()['name'];
-        }
-      });
-
-    oauthService.setupAutomaticSilentRefresh();
+    await this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    if (
+      this.oauthService.hasValidIdToken() ||
+      this.oauthService.hasValidAccessToken()
+    ) {
+      this.router.navigate(['/home']);
+    }
   }
   ngOnInit() {
-    console.log(this.oauthService.hasValidAccessToken());
+    console.log(this.oauthService.hasValidIdToken);
+    this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0);
+    });
   }
-  login() {
-    this.oauthService.initImplicitFlow();
+  public login() {
+    this.oauthService.initCodeFlow();
   }
   logout() {
     this.oauthService.logOut();

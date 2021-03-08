@@ -36,28 +36,6 @@ import {
   OAuthModuleConfig,
 } from 'angular-oauth2-oidc';
 
-const config: AuthConfig = {
-  issuer: 'https://id.nepalinames.com',
-  clientId: 'js',
-  customQueryParams: { audience: 'https://id.nepalinames.com' },
-  redirectUri: window.location.origin + '/home',
-  silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-  scope: 'openid profile',
-  showDebugInformation: true,
-  responseType: 'code',
-};
-
-config.logoutUrl = `${config.issuer}/logout?client_id=${
-  config.clientId
-}&returnTo=${encodeURIComponent(config.redirectUri)}`;
-
-const authModuleConfig: OAuthModuleConfig = {
-  // Inject "Authorization: Bearer ..." header for these APIs:
-  resourceServer: {
-    allowedUrls: ['http://localhost:4200'],
-    sendAccessToken: true,
-  },
-};
 // oidc config
 // export function configureAuth(oidcConfigService: OidcConfigService) {
 //   return () =>
@@ -100,7 +78,12 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     BrowserAnimationsModule,
     ScrollingModule,
     DragDropModule,
-    OAuthModule.forRoot(authModuleConfig),
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: ['http://localhost:4200'],
+        sendAccessToken: true,
+      },
+    }),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
@@ -112,10 +95,6 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
       useClass: AuthInterceptorInterceptor,
       multi: true,
     },
-    { provide: OAuthModuleConfig, useValue: authModuleConfig },
-    { provide: ValidationHandler, useClass: JwksValidationHandler },
-    { provide: OAuthStorage, useValue: localStorage },
-    { provide: AuthConfig, useValue: config },
   ],
   bootstrap: [AppComponent],
 })
