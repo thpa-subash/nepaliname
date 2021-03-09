@@ -1,3 +1,4 @@
+import { FrontComponent } from './front/front.component';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './Guard/auth.guard';
 import { LoginComponent } from './Admin/login/login.component';
@@ -12,7 +13,7 @@ const routes: Routes = [
     path: 'home',
     component: DashboardComponent,
   },
-  // { path: 'home', component: AddNamesComponent ,canActivate: [AuthGuard]},
+  { path: '', component: FrontComponent },
   { path: 'login', component: LoginComponent },
 ];
 

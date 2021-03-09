@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+
 import {
   OAuthService,
   JwksValidationHandler,
@@ -22,6 +23,7 @@ export class AppComponent {
     return this.oauthService.getAccessToken();
   }
   get claims() {
+    console.log(this.oauthService.getIdentityClaims());
     return this.oauthService.getIdentityClaims();
   }
   title = 'NepaliName';
@@ -36,10 +38,11 @@ export class AppComponent {
   ];
   constructor(private router: Router, private oauthService: OAuthService) {
     this.configureWithNewConfigApi();
+    console.log(this.oauthService.loadUserProfile);
   }
   private async configureWithNewConfigApi() {
     this.oauthService.configure(authConfig);
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
     if (
@@ -50,13 +53,13 @@ export class AppComponent {
     }
   }
   ngOnInit() {
-    console.log(this.oauthService.hasValidIdToken);
-    this.router.events.subscribe((evt) => {
-      if (!(evt instanceof NavigationEnd)) {
-        return;
-      }
-      window.scrollTo(0, 0);
-    });
+    // this.router.events.subscribe((evt) => {
+    //   if (!(evt instanceof NavigationEnd)) {
+    //     console.log(evt);
+    //     return;
+    //   }
+    //   window.scrollTo(0, 0);
+    // });
   }
   public login() {
     this.oauthService.initCodeFlow();

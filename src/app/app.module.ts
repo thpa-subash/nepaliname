@@ -35,6 +35,7 @@ import {
   OAuthStorage,
   OAuthModuleConfig,
 } from 'angular-oauth2-oidc';
+import { FrontComponent } from './front/front.component';
 
 // oidc config
 // export function configureAuth(oidcConfigService: OidcConfigService) {
@@ -67,6 +68,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     AddNamesComponent,
     HeaderComponent,
     LoginComponent,
+    FrontComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +82,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     DragDropModule,
     OAuthModule.forRoot({
       resourceServer: {
-        allowedUrls: ['http://localhost:4200'],
+        allowedUrls: ['https://id.nepalinames.com'],
         sendAccessToken: true,
       },
     }),
