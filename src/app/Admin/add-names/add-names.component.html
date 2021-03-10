@@ -23,33 +23,32 @@
         (nzOnOk)="handleOkAdd()"
       >
         <ng-container *nzModalContent>
-          <form nz-form [formGroup]="form" (ngSubmit)="handleOkAdd()">
+          <form
+            nz-form
+            [formGroup]="validateForm"
+            (ngSubmit)="handleOkAdd(validateForm.value)"
+          >
             <nz-form-item>
-              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"
-                >Name</nz-form-label
-              >
+              <nz-form-label [nzSm]="6" [nzXs]="24">Name</nz-form-label>
               <nz-form-control
-                [nzSm]="14"
-                [nzXs]="24"
-                nzErrorTip="The input is not valid "
+                nzHasFeedback
+                nzValidatingTip="Validating..."
+                [nzErrorTip]="userErrorTpl"
               >
-                <input
-                  nz-input
-                  id="name"
-                  nzSize="large"
-                  formControlName="name"
-                />
+                <input nz-input formControlName="name" placeholder="" />
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please Enter name!
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('duplicated')">
+                    The username is already exists!
+                  </ng-container>
+                </ng-template>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="nepali"
-                >Name in Nepali</nz-form-label
-              >
-              <nz-form-control
-                [nzSm]="14"
-                [nzXs]="24"
-                nzErrorTip="The input is not valid"
-              >
+              <nz-form-label [nzSm]="6" [nzXs]="24">Nepali</nz-form-label>
+              <nz-form-control nzErrorTip="Please Enter Nepali Name">
                 <input
                   nz-input
                   id="nepali"
@@ -58,27 +57,27 @@
                 />
               </nz-form-control>
             </nz-form-item>
+
             <nz-form-item>
-              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="gender"
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="gender"
                 >Gender</nz-form-label
               >
-              <nz-form-control>
+              <nz-form-control nzErrorTip="Please select Gender">
                 <nz-radio-group formControlName="gender">
                   <label nz-radio nzValue="male">Male</label>
                   <label nz-radio nzValue="female">Female</label>
+                  <label nz-radio nzValue="female">Unisex</label>
                 </nz-radio-group>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="desc"
-                >Description</nz-form-label
-              >
-              <nz-form-control>
+              <nz-form-label [nzSm]="6" [nzXs]="24">Meanings</nz-form-label>
+              <nz-form-control nzErrorTip="Please write something here!">
                 <textarea
-                  rows="4"
-                  id="desc"
                   formControlName="description"
                   nz-input
+                  rows="2"
+                  placeholder="write any thing"
                 ></textarea>
               </nz-form-control>
             </nz-form-item>
@@ -91,9 +90,8 @@
           <button
             nz-button
             nzType="primary"
-            (click)="handleOkAdd()"
             [nzLoading]="isConfirmLoading"
-            [disabled]="form.invalid"
+            [disabled]="validateForm.invalid"
           >
             Submit
           </button>

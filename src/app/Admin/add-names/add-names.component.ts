@@ -21,21 +21,49 @@ export class AddNamesComponent implements OnInit {
   isVisibleEdit = false;
   isVisibleTop = false;
   editCache: { [key: string]: { edit: boolean; data: Names } } = {};
-  constructor() {
+  validateForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
     this.options = this.listOfData;
     this.filteredOptions = this.options;
     console.log(this.editCache.edit);
     this.updateEditCache();
+    // initial forms status
+    this.validateForm = this.fb.group({
+      name: ['', [Validators.required], [this.userNameAsyncValidator]],
+      nepali: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+    });
   }
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    nepali: new FormControl('', [Validators.required]),
-    gender: new FormControl('', Validators.required),
-    description: new FormControl(''),
-  });
-  submit() {
-    console.log(this.form.value);
+  submitForm1(value: {
+    name: string;
+    nepali: string;
+    gender: string;
+    description: string;
+  }): void {
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    }
+    console.log(value);
   }
+
+  //check username is initially exists or not
+  userNameAsyncValidator = (control: FormControl) =>
+    new Observable((observer: Observer<ValidationErrors | null>) => {
+      setTimeout(() => {
+        //check the name exist or not
+        if (this.listOfData.map((nam) => nam.name).includes(control.value)) {
+          // you have to return `{error: true}` to mark it as an error event
+          observer.next({ error: true, duplicated: true });
+        } else {
+          observer.next(null);
+        }
+        observer.complete();
+      }, 1000);
+    });
+
   ngOnInit(): void {}
   listOfColumn = [
     {
@@ -70,7 +98,7 @@ export class AddNamesComponent implements OnInit {
 
     {
       id: '2',
-      name: '	subash',
+      name: 'subash',
       nepali: '	सुबाश',
       gender: 'male',
       description:
@@ -109,12 +137,23 @@ export class AddNamesComponent implements OnInit {
   }
   handleOkAdd(): void {
     console.log('Button ok clicked!');
-    console.log(this.form.value);
-    this.isVisibleTop = false;
+    console.log(this.validateForm.value);
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    }
+    //check submit form is valid or not
+    if (this.validateForm.invalid) {
+      this.isVisibleTop = true;
+    } else {
+      this.isVisibleTop = false;
+      this.validateForm.reset();
+    }
   }
 
   handleCancelAdd(): void {
     console.log('Button cancel clicked!');
+    this.validateForm.reset();
     this.isVisibleTop = false;
   }
   startEdit(id: string): void {
