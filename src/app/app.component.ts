@@ -36,7 +36,11 @@ export class AppComponent {
     'Man charged over missing wedding girl.',
     'Los Angeles battles huge wildfires.',
   ];
-  constructor(private router: Router, private oauthService: OAuthService) {
+  constructor(
+    private router: Router,
+    private oauthService: OAuthService,
+    private authService: AuthService
+  ) {
     this.configureWithNewConfigApi();
     console.log(this.oauthService.loadUserProfile);
   }
@@ -69,5 +73,8 @@ export class AppComponent {
   }
   refresh() {
     this.oauthService.silentRefresh();
+  }
+  getNames() {
+    console.log(this.authService.names().subscribe((data) => data));
   }
 }

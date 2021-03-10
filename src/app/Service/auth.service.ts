@@ -12,6 +12,6 @@ export class AuthService {
   constructor(public http: HttpClient) {}
   public names(): Observable<any[]> {
     console.log(this.http.get<any[]>('https://www.nepalinames.com/api/names/'));
-    return this.http.get<any[]>('https://www.nepalinames.com/api/names');
+    return this.http.get<any[]>('https://www.nepalinames.com/api/names/');
   }
 }
