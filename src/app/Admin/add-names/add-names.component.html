@@ -2,6 +2,7 @@
   <div class="name-header">
     <h2 nz-typography>NEPALI NAMES</h2>
     <div class="add-button">
+      <button nz-button nzType="primary" (click)="getNames()">Get Names</button>
       <button
         nz-button
         nzType="primary"
@@ -23,11 +24,7 @@
         (nzOnOk)="handleOkAdd()"
       >
         <ng-container *nzModalContent>
-          <form
-            nz-form
-            [formGroup]="validateForm"
-            (ngSubmit)="handleOkAdd(validateForm.value)"
-          >
+          <form nz-form [formGroup]="validateForm">
             <nz-form-item>
               <nz-form-label [nzSm]="6" [nzXs]="24">Name</nz-form-label>
               <nz-form-control
@@ -66,7 +63,7 @@
                 <nz-radio-group formControlName="gender">
                   <label nz-radio nzValue="male">Male</label>
                   <label nz-radio nzValue="female">Female</label>
-                  <label nz-radio nzValue="female">Unisex</label>
+                  <label nz-radio nzValue="unisex">Unisex</label>
                 </nz-radio-group>
               </nz-form-control>
             </nz-form-item>
@@ -90,6 +87,7 @@
           <button
             nz-button
             nzType="primary"
+            (click)="handleOkAdd(validateForm.value)"
             [nzLoading]="isConfirmLoading"
             [disabled]="validateForm.invalid"
           >
@@ -150,7 +148,14 @@
             <td>{{ data.nepali }}</td>
             <td>{{ data.gender }}</td>
             <td>{{ data.description }}</td>
-            <td>{{ data.update | date }}</td>
+            <td *ngIf="data.update; else second">
+              <button nz-button nzType="primary" (click)="approve(data.id)">
+                Approve
+              </button>
+            </td>
+
+            <ng-template #second><td></td></ng-template>
+
             <td><a (click)="startEdit(data.id)">Edit</a></td>
           </ng-container>
           <ng-template #editTemplate>

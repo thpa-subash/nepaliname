@@ -1,5 +1,11 @@
 import { AuthService } from './../Service/auth.service';
 import { Injectable, Injector } from '@angular/core';
+
+import {
+  OAuthService,
+  JwksValidationHandler,
+  OAuthErrorEvent,
+} from 'angular-oauth2-oidc';
 import {
   HttpRequest,
   HttpHandler,
@@ -13,12 +19,24 @@ import { Observable } from 'rxjs';
 export class AuthInterceptorInterceptor implements HttpInterceptor {
   private secureRoutes = ['https://id.nepalinames.com'];
 
-  constructor(private authService: AuthService, private injector: Injector) {}
+  constructor(
+    private authService: AuthService,
+    private injector: Injector,
+    private oauthService: OAuthService
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    let token = this.oauthService.getAccessToken();
+
+    // if (token == '') {
+    //   let tokenValue = 'Bearer ' + token;
+    //   request = request.clone({
+    //     setHeaders: { Authorization: tokenValue },
+    //   });
+    // }
     return next.handle(request);
     // let requestToForward = request;
 

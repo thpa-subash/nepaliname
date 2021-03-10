@@ -1,3 +1,4 @@
+import { AuthService } from './../../Service/auth.service';
 import { Names } from './../../Model/names';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -23,10 +24,10 @@ export class AddNamesComponent implements OnInit {
   editCache: { [key: string]: { edit: boolean; data: Names } } = {};
   validateForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.options = this.listOfData;
     this.filteredOptions = this.options;
-    console.log(this.editCache.edit);
+
     this.updateEditCache();
     // initial forms status
     this.validateForm = this.fb.group({
@@ -143,12 +144,14 @@ export class AddNamesComponent implements OnInit {
       this.validateForm.controls[key].updateValueAndValidity();
     }
     //check submit form is valid or not
-    if (this.validateForm.invalid) {
-      this.isVisibleTop = true;
-    } else {
-      this.isVisibleTop = false;
-      this.validateForm.reset();
-    }
+    // if (this.validateForm.invalid) {
+    //   this.isVisibleTop = true;
+    // } else {
+    //   this.isVisibleTop = false;
+    //   this.validateForm.reset();
+    // }
+    this.isVisibleTop = false;
+    this.validateForm.reset();
   }
 
   handleCancelAdd(): void {
@@ -190,5 +193,12 @@ export class AddNamesComponent implements OnInit {
         data: { ...item },
       };
     });
+  }
+  //approve reuests
+  approve(id: number) {
+    console.log('i am approve name' + id);
+  }
+  getNames() {
+    console.log(this.authService.names().subscribe((data) => data));
   }
 }

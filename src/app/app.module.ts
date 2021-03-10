@@ -95,11 +95,11 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     { provide: NZ_ICONS, useValue: icons },
     AuthGuard,
     AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptorInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

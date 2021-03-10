@@ -50,3 +50,6 @@ nzTitle {
 .save {
   margin-right: 8px;
 }
+th:nth-child(4) {
+  width: 45%;
+}
