@@ -1,4 +1,5 @@
 import { AuthInterceptorInterceptor } from './Interceptor/auth-interceptor.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './Service/auth.service';
 import { AuthGuard } from './Guard/auth.guard';
 import { ZorroModule } from './zorro/zorro.module';
@@ -7,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import {
   HttpClientJsonpModule,
   HttpClientModule,
@@ -74,6 +75,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ZorroModule,

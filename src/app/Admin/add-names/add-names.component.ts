@@ -1,5 +1,13 @@
 import { Names } from './../../Model/names';
 import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import { Observable, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-add-names',
@@ -19,8 +27,36 @@ export class AddNamesComponent implements OnInit {
     console.log(this.editCache.edit);
     this.updateEditCache();
   }
-
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    nepali: new FormControl('', [Validators.required]),
+    gender: new FormControl('', Validators.required),
+    description: new FormControl(''),
+  });
+  submit() {
+    console.log(this.form.value);
+  }
   ngOnInit(): void {}
+  listOfColumn = [
+    {
+      title: 'Name',
+
+      priority: 3,
+    },
+    {
+      title: 'Name in Nepali',
+    },
+    {
+      title: 'Gender',
+    },
+    { title: 'Meaning' },
+    {
+      title: 'Approve',
+      compare: (a: Names, b: Names) => a.update - b.update,
+      priority: 3,
+    },
+    { title: 'Action' },
+  ];
   listOfData: Names[] = [
     {
       id: '1',
@@ -29,6 +65,7 @@ export class AddNamesComponent implements OnInit {
       gender: 'female',
       description:
         'She was literally a woman and a poetess in Qastaniniyah (उनी शाब्दिक महिला थिइन र कस्तानिनियाहमा एक कवि थिइन)',
+      update: 324234,
     },
 
     {
@@ -38,6 +75,7 @@ export class AddNamesComponent implements OnInit {
       gender: 'male',
       description:
         'Gift of god (भगवान को उपहार); Fresh smell (ताजा गन्ध); Fragrance (सुगन्ध)',
+      update: '',
     },
     {
       id: '3',
@@ -46,6 +84,7 @@ export class AddNamesComponent implements OnInit {
       gender: 'male',
       description:
         'Peak (चुचुरो); Mountain (पहाड); Ultimate (अन्तिम); Lord Shiva (भगवान शिव)',
+      update: 2341234,
     },
     {
       id: '3',
@@ -54,6 +93,7 @@ export class AddNamesComponent implements OnInit {
       gender: 'male',
       description:
         'One who holds moons in his hair (जसले आफ्नो कपालमा चन्द्रमा लगाउँछ); Lord Shiva (भगवान शिव)',
+      update: 2341234,
     },
   ];
   onChange(value: string): void {
@@ -69,6 +109,7 @@ export class AddNamesComponent implements OnInit {
   }
   handleOkAdd(): void {
     console.log('Button ok clicked!');
+    console.log(this.form.value);
     this.isVisibleTop = false;
   }
 

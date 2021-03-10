@@ -4,4 +4,5 @@ export interface Names {
   nepali: string;
   gender: string;
   description: string;
+  update: any;
 }
