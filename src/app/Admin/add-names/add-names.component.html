@@ -162,7 +162,9 @@
               </button>
             </td>
 
-            <ng-template #second><td></td></ng-template>
+            <ng-template #second
+              ><td>{{ data.update | nzSafeNull: "-" }}</td></ng-template
+            >
 
             <td><a (click)="startEdit(data.id)">Edit</a></td>
           </ng-container>
