@@ -37,3 +37,7 @@ nz-menu {
 nz-footer {
   text-align: center;
 }
+li span {
+  font-size: 18px;
+  color: #fff;
+}

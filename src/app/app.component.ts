@@ -41,10 +41,10 @@ export class AppComponent {
     private authService: AuthService
   ) {
     this.configureWithNewConfigApi();
-    const accessToken: string = this.oauthService.getAccessToken();
-    const tokens: string[] = accessToken.split('.');
-    const claims = JSON.parse(atob(tokens[1]));
-    console.log(claims);
+    // const accessToken: string = this.oauthService.getAccessToken();
+    // const tokens: string[] = accessToken.split('.');
+    // const claims = JSON.parse(atob(tokens[1]));
+    // console.log(claims);
 
     //return the roles user roles
     // return claims.realm_access.roles;
@@ -55,7 +55,7 @@ export class AppComponent {
     // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
     //.loadDiscoveryDocumentAndTryLogin(); it show the custom login forms
-    await this.oauthService.loadDiscoveryDocumentAndLogin();
+    await this.oauthService.loadDiscoveryDocumentAndTryLogin();
     if (
       this.oauthService.hasValidIdToken() ||
       this.oauthService.hasValidAccessToken()
@@ -73,7 +73,7 @@ export class AppComponent {
     // });
   }
   public login() {
-    this.oauthService.initLoginFlow();
+    this.oauthService.initCodeFlow();
   }
   logout() {
     this.oauthService.logOut();
