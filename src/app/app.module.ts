@@ -38,21 +38,6 @@ import {
 } from 'angular-oauth2-oidc';
 import { FrontComponent } from './front/front.component';
 
-// oidc config
-// export function configureAuth(oidcConfigService: OidcConfigService) {
-//   return () =>
-//     oidcConfigService.withConfig({
-//       stsServer: 'https://id.nepalinames.com',
-//       redirectUrl: window.location.origin + '/home',
-//       postLogoutRedirectUri: window.location.origin,
-//       clientId: 'js',
-//       scope: 'openid profile',
-//       responseType: 'code',
-//       silentRenew: true,
-//       silentRenewUrl: window.location.origin + '/home',
-//       logLevel: LogLevel.Debug,
-//     });
-// }
 //setting for nz-icons
 registerLocaleData(en);
 const antDesignIcons = AllIcons as {
@@ -85,7 +70,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     DragDropModule,
     OAuthModule.forRoot({
       resourceServer: {
-        allowedUrls: ['https://id.nepalinames.com'],
+        allowedUrls: ['https://id.nepalinames.com/api/names'],
         sendAccessToken: true,
       },
     }),

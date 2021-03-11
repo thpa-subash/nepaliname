@@ -7,9 +7,9 @@ export const authConfig: AuthConfig = {
   redirectUri: window.location.origin + '/home',
 
   // URL of the SPA to redirect the user after silent refresh
+  useSilentRefresh: true,
 
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-  useSilentRefresh: true,
   // The SPA's id. The SPA is registerd with this id at the auth-server
   clientId: 'js',
 

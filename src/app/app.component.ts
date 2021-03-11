@@ -23,7 +23,6 @@ export class AppComponent {
     return this.oauthService.getAccessToken();
   }
   get claims() {
-    console.log(this.oauthService.getIdentityClaims());
     return this.oauthService.getIdentityClaims();
   }
   title = 'NepaliName';
