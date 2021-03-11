@@ -18,12 +18,13 @@ export const authConfig: AuthConfig = {
   scope: 'openid profile',
   postLogoutRedirectUri: 'http://localhost:4200',
   // silentRefreshShowIFrame: true,
-
+  dummyClientSecret: 'don',
   showDebugInformation: true,
 
   sessionChecksEnabled: true,
   responseType: 'code',
-  clearHashAfterLogin: false,
+  // clearHashAfterLogin: false,
   nonceStateSeparator: 'semicolon',
+
   // timeoutFactor: 0.01,
 };

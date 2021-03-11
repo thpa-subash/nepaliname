@@ -41,13 +41,21 @@ export class AppComponent {
     private authService: AuthService
   ) {
     this.configureWithNewConfigApi();
-    console.log(this.oauthService.loadUserProfile);
+    const accessToken: string = this.oauthService.getAccessToken();
+    const tokens: string[] = accessToken.split('.');
+    const claims = JSON.parse(atob(tokens[1]));
+    console.log(claims);
+
+    //return the roles user roles
+    // return claims.realm_access.roles;
+    this.oauthService.setupAutomaticSilentRefresh();
   }
   private async configureWithNewConfigApi() {
     this.oauthService.configure(authConfig);
     // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
-    await this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    //.loadDiscoveryDocumentAndTryLogin(); it show the custom login forms
+    await this.oauthService.loadDiscoveryDocumentAndLogin();
     if (
       this.oauthService.hasValidIdToken() ||
       this.oauthService.hasValidAccessToken()
@@ -65,7 +73,7 @@ export class AppComponent {
     // });
   }
   public login() {
-    this.oauthService.initCodeFlow();
+    this.oauthService.initLoginFlow();
   }
   logout() {
     this.oauthService.logOut();
@@ -75,5 +83,11 @@ export class AppComponent {
   }
   getNames() {
     console.log(this.authService.names().subscribe((data) => data));
+  }
+  public get name() {
+    let claims = this.oauthService.getIdentityClaims();
+    console.log('get names' + claims);
+    if (!claims) return null;
+    return claims;
   }
 }
