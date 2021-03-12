@@ -1,15 +1,29 @@
+import { authConfig } from './../auth.config';
 import { Names } from './../Model/names';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
+import {
+  OAuthService,
+  JwksValidationHandler,
+  OAuthErrorEvent,
+} from 'angular-oauth2-oidc';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(public http: HttpClient) {}
+  validUser = new BehaviorSubject('');
+  constructor(
+    public http: HttpClient,
+    private router: Router,
+    private oauthService: OAuthService
+  ) {
+    console.log(this.validUser);
+  }
 
   names(): Observable<any[]> {
     let headers = new HttpHeaders();
@@ -39,5 +53,10 @@ export class AuthService {
       'https://www.nepalinames.com/api/names/' + id,
       JSON.stringify(post)
     );
+  }
+  //check user is valid or not
+  ValidUser(data) {
+    console.log('from service' + data);
+    this.validUser.next(data);
   }
 }

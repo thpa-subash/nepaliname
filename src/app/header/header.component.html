@@ -19,7 +19,9 @@
             <li nz-menu-item><i nz-icon nzType="user"></i>My Profile</li>
             <li nz-menu-item><i nz-icon nzType="setting"></i> Settings</li>
             <li nz-menu-divider></li>
-            <li nz-menu-item><i nz-icon nzType="logout"></i> Logout</li>
+            <li nz-menu-item (click)="logout()">
+              <i nz-icon nzType="logout"></i> Logout
+            </li>
           </ul>
         </nz-dropdown-menu>
       </div>

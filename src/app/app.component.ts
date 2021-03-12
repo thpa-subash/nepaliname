@@ -49,18 +49,25 @@ export class AppComponent {
     //return the roles user roles
     // return claims.realm_access.roles;
     this.oauthService.setupAutomaticSilentRefresh();
+    console.log(this.oauthService.hasValidIdToken());
   }
   private async configureWithNewConfigApi() {
     this.oauthService.configure(authConfig);
     // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
-    //.loadDiscoveryDocumentAndTryLogin(); it show the custom login forms
+    //.loadDiscoveryDocumentAndLogin(); it show the custom login forms
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    console.log(this.oauthService.hasValidIdToken());
+    this.authService.ValidUser(this.oauthService.hasValidAccessToken());
+
     if (
       this.oauthService.hasValidIdToken() ||
       this.oauthService.hasValidAccessToken()
     ) {
-      this.router.navigate(['/home']);
+      console.log(this.oauthService.hasValidIdToken());
+      // this.authService.ValidUser(false);
+
+      // this.router.navigate(['/home']);
     }
   }
   ngOnInit() {

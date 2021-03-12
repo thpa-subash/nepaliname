@@ -34,10 +34,9 @@
       </ul>
     </li>
 
-    <!--
-    <li
+    <!-- <li
       nz-menu-item
-      *ngIf="!isAuthenticated$"
+      *ngIf="!validUser"
       class="nav-item"
       [routerLinkActive]="['link-active']"
     >
@@ -45,11 +44,21 @@
     </li>
     <li
       nz-menu-item
-      *ngIf="isAuthenticated$"
+      *ngIf="validUser"
       class="nav-item"
       [routerLinkActive]="['link-active']"
     >
       <a (click)="logout()" class="nav-link text-dark">Logout</a>
     </li>-->
+    <p>
+      <button (click)="login()">Log in</button>
+      <button (click)="logout()">Log out</button>
+      <button (click)="refresh()">Refresh</button>
+    </p>
+
+    <p>Access Token</p>
+    <pre>{{ token | json }}</pre>
+    <p>Claims</p>
+    <pre>{{ claims | json }}</pre>
   </ul>
 </div>
