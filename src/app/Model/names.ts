@@ -1,8 +1,11 @@
 export interface Names {
   id: string;
-  name: string;
-  nepali: string;
+  name_EN: string;
+  name_NP: string;
   gender: string;
-  description: string;
-  update: any;
+  meaning: string;
+  origin: string;
+  slug: string;
+  postStatus: string;
+  modified: any;
 }

@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<div [class]="serviceService.presentTheme$ | async">
+  <router-outlet></router-outlet>
+</div>
+<button
+  nz-button
+  nzType="primary"
+  nzSize="large"
+  nzShape="round"
+  (click)="getNames()"
+>
+  Fetch Names
+</button>

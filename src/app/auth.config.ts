@@ -27,4 +27,6 @@ export const authConfig: AuthConfig = {
   nonceStateSeparator: 'semicolon',
 
   // timeoutFactor: 0.01,
+  silentRefreshTimeout: 5000, // For faster testing
+  timeoutFactor: 0.25,
 };

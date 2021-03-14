@@ -123,7 +123,7 @@
       <nz-auto-option
         class="global-search-item"
         *ngFor="let option of filteredOptions"
-        [nzValue]="option.name"
+        [nzValue]="option.name_EN"
       >
         {{ option.name }}
       </nz-auto-option>
@@ -152,18 +152,18 @@
       <tbody>
         <tr *ngFor="let data of editRowTable.data">
           <ng-container *ngIf="!editCache[data.id].edit; else editTemplate">
-            <td>{{ data.name }}</td>
-            <td>{{ data.nepali }}</td>
+            <td>{{ data.name_EN }}</td>
+            <td>{{ data.name_NP }}</td>
             <td>{{ data.gender }}</td>
-            <td>{{ data.description }}</td>
-            <td *ngIf="data.update; else second">
+            <td>{{ data.meaning }}</td>
+            <td *ngIf="data.modified; else second">
               <button nz-button nzType="primary" (click)="approve(data.id)">
                 Approve
               </button>
             </td>
 
             <ng-template #second
-              ><td>{{ data.update | nzSafeNull: "-" }}</td></ng-template
+              ><td>{{ data.modified | nzSafeNull: "-" }}</td></ng-template
             >
 
             <td><a (click)="startEdit(data.id)">Edit</a></td>

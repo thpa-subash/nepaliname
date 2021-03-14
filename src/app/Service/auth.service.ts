@@ -25,15 +25,23 @@ export class AuthService {
     console.log(this.validUser);
   }
 
-  names(): Observable<any[]> {
+  names(): Observable<Names[]> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
+    // request.setRequestHeader('Content-type', 'application/json');
+    headers = headers.set('Accept', 'application/octet-stream');
+    headers = headers.set('Access-Control-Allow-Origin', '*');
     const httpOptions = {
       headers: headers,
     };
-    console.log(this.http.get<any[]>('https://www.nepalinames.com/api/names/'));
-    return this.http.get<any[]>(
-      'https://www.nepalinames.com/api/names/',
+    console.log(
+      this.http.get<Names[]>(
+        'https://www.nepalinames.com/api/names',
+        httpOptions
+      )
+    );
+    return this.http.get<Names[]>(
+      'https://www.nepalinames.com/api/names',
       httpOptions
     );
   }

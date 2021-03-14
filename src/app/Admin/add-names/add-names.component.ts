@@ -25,6 +25,10 @@ export class AddNamesComponent implements OnInit {
   validateForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
+    this.authService.names().subscribe((data: Names[]) => {
+      console.log(data);
+    });
+    console.log('thapa');
     this.options = this.listOfData;
     this.filteredOptions = this.options;
 
@@ -55,7 +59,7 @@ export class AddNamesComponent implements OnInit {
     new Observable((observer: Observer<ValidationErrors | null>) => {
       setTimeout(() => {
         //check the name exist or not
-        if (this.listOfData.map((nam) => nam.name).includes(control.value)) {
+        if (this.listOfData.map((nam) => nam.name_EN).includes(control.value)) {
           // you have to return `{error: true}` to mark it as an error event
           observer.next({ error: true, duplicated: true });
         } else {
@@ -81,54 +85,67 @@ export class AddNamesComponent implements OnInit {
     { title: 'Meaning' },
     {
       title: 'Approve',
-      compare: (a: Names, b: Names) => a.update - b.update,
+      compare: (a: Names, b: Names) => a.modified - b.modified,
       priority: 3,
     },
     { title: 'Action' },
   ];
   listOfData: Names[] = [
     {
-      id: '1',
-      name: 'aani',
-      nepali: 'आनी',
-      gender: 'female',
-      description:
-        'She was literally a woman and a poetess in Qastaniniyah (उनी शाब्दिक महिला थिइन र कस्तानिनियाहमा एक कवि थिइन)',
-      update: 324234,
+      id: '0',
+      name_EN: 'chandrashekhar',
+      name_NP: 'चन्द्रशेखर',
+      gender: 'male',
+      meaning:
+        'One who holds moons in his hair (जसले आफ्नो कपालमा चन्द्रमा लगाउँछ); Lord Shiva (भगवान शिव)',
+      origin: '',
+      slug: '',
+      postStatus: '',
+      modified: '',
     },
 
     {
-      id: '2',
-      name: 'subash',
-      nepali: '	सुबाश',
+      id: '1',
+      name_EN: 'chandrashekhar',
+      name_NP: 'चन्द्रशेखर',
       gender: 'male',
-      description:
-        'Gift of god (भगवान को उपहार); Fresh smell (ताजा गन्ध); Fragrance (सुगन्ध)',
-      update: '',
-    },
-    {
-      id: '3',
-      name: 'shekhar',
-      nepali: 'शेखर',
-      gender: 'male',
-      description:
-        'Peak (चुचुरो); Mountain (पहाड); Ultimate (अन्तिम); Lord Shiva (भगवान शिव)',
-      update: 2341234,
-    },
-    {
-      id: '3',
-      name: 'chandrashekhar',
-      nepali: 'चन्द्रशेखर',
-      gender: 'male',
-      description:
+      meaning:
         'One who holds moons in his hair (जसले आफ्नो कपालमा चन्द्रमा लगाउँछ); Lord Shiva (भगवान शिव)',
-      update: 2341234,
+      origin: '',
+      slug: '',
+      postStatus: '',
+      modified: '',
+    },
+    {
+      id: '2',
+      name_EN: 'chandrashekhar',
+      name_NP: 'चन्द्रशेखर',
+      gender: 'male',
+      meaning:
+        'One who holds moons in his hair (जसले आफ्नो कपालमा चन्द्रमा लगाउँछ); Lord Shiva (भगवान शिव)',
+      origin: '',
+      slug: '',
+      postStatus: '',
+      modified: '',
+    },
+    {
+      id: '3',
+      name_EN: 'chandrashekhar',
+      name_NP: 'चन्द्रशेखर',
+      gender: 'male',
+      meaning:
+        'One who holds moons in his hair (जसले आफ्नो कपालमा चन्द्रमा लगाउँछ); Lord Shiva (भगवान शिव)',
+      origin: '',
+      slug: '',
+      postStatus: '',
+      modified: '',
     },
   ];
   onChange(value: string): void {
     // this.options = this.listOfData.map((name) => name.name);
     this.filteredOptions = this.listOfData.filter(
-      (option) => option.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
+      (option) =>
+        option.name_EN.toLowerCase().indexOf(value.toLowerCase()) !== -1
     );
     // const value = (event.target as HTMLInputElement).value;
   }
@@ -199,6 +216,9 @@ export class AddNamesComponent implements OnInit {
     console.log('i am approve name' + id);
   }
   getNames() {
-    console.log(this.authService.names().subscribe((data) => data));
+    this.authService.names().subscribe((data) => {
+      console.log(data);
+    });
+    // console.log(this.authService.names().subscribe((data) => data));
   }
 }

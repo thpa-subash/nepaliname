@@ -1,3 +1,4 @@
+import { ServiceService } from './Service/service.service';
 import { authConfig } from './auth.config';
 import { AuthService } from './Service/auth.service';
 import { Component } from '@angular/core';
@@ -38,7 +39,8 @@ export class AppComponent {
   constructor(
     private router: Router,
     private oauthService: OAuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    public serviceService: ServiceService
   ) {
     this.configureWithNewConfigApi();
     // const accessToken: string = this.oauthService.getAccessToken();

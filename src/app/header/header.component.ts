@@ -1,3 +1,4 @@
+import { ServiceService } from './../Service/service.service';
 import { Component, OnInit } from '@angular/core';
 
 import {
@@ -12,10 +13,17 @@ import {
 })
 export class HeaderComponent implements OnInit {
   switchValue = false;
-  constructor(private oauthService: OAuthService) {}
+  constructor(
+    private oauthService: OAuthService,
+    private serviceService: ServiceService
+  ) {}
 
   ngOnInit(): void {}
   logout() {
     this.oauthService.logOut();
+  }
+  changeTheme(data) {
+    this.serviceService.changeTheme(data);
+    this.switchValue = !this.switchValue;
   }
 }

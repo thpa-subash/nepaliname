@@ -9,15 +9,15 @@ import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: 'home',
-    component: DashboardComponent,
-    canActivate: [AuthGuard],
-  },
   // {
   //   path: 'home',
   //   component: DashboardComponent,
+  //   canActivate: [AuthGuard],
   // },
+  {
+    path: 'home',
+    component: DashboardComponent,
+  },
   { path: '', component: FrontComponent },
   { path: 'login', component: LoginComponent },
 ];
