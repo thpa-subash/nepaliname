@@ -122,7 +122,7 @@
     <nz-autocomplete #auto>
       <nz-auto-option
         class="global-search-item"
-        *ngFor="let option of filteredOptions"
+        *ngFor="let option of options"
         [nzValue]="option.name_EN"
       >
         {{ option.name }}
@@ -130,6 +130,7 @@
     </nz-autocomplete>
   </div>
   <nz-divider></nz-divider>
+
   <div class="name-table">
     <nz-table
       #editRowTable
@@ -155,7 +156,7 @@
             <td>{{ data.name_EN }}</td>
             <td>{{ data.name_NP }}</td>
             <td>{{ data.gender }}</td>
-            <td>{{ data.meaning }}</td>
+            <td>{{ data.meaning | nzSafeNull: "-" }}</td>
             <td *ngIf="data.modified; else second">
               <button nz-button nzType="primary" (click)="approve(data.id)">
                 Approve
@@ -174,7 +175,7 @@
                 type="text"
                 nz-input
                 nzSize="large"
-                [(ngModel)]="editCache[data.id].data.name"
+                [(ngModel)]="editCache[data.id].data.name_NP"
               />
             </td>
             <td>
@@ -182,7 +183,7 @@
                 type="text"
                 nzSize="large"
                 nz-input
-                [(ngModel)]="editCache[data.id].data.nepali"
+                [(ngModel)]="editCache[data.id].data.name_EN"
               />
             </td>
             <td>
@@ -198,7 +199,7 @@
                 type="text"
                 nz-input
                 nzSize="large"
-                [(ngModel)]="editCache[data.id].data.description"
+                [(ngModel)]="editCache[data.id].data.meaning"
               />
             </td>
             <td>
@@ -206,7 +207,7 @@
                 type="text"
                 nz-input
                 nzSize="large"
-                [(ngModel)]="editCache[data.id].data.update"
+                [(ngModel)]="editCache[data.id].data.id"
               />
             </td>
             <td>

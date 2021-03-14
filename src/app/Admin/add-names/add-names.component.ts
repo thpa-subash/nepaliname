@@ -17,22 +17,18 @@ import { Observable, Observer } from 'rxjs';
 })
 export class AddNamesComponent implements OnInit {
   inputValue?: string;
-  options: any = [];
-  filteredOptions: any = [];
+  options: Names[] = [];
+  newData: Names[] = [];
+  filteredOptions: Names[] = [];
   isVisibleEdit = false;
   isVisibleTop = false;
   editCache: { [key: string]: { edit: boolean; data: Names } } = {};
   validateForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
-    this.authService.names().subscribe((data: Names[]) => {
-      console.log(data);
-    });
-    console.log('thapa');
-    this.options = this.listOfData;
-    this.filteredOptions = this.options;
+    // this.filteredOptions = this.options;
+    // this.getNames();
 
-    this.updateEditCache();
     // initial forms status
     this.validateForm = this.fb.group({
       name: ['', [Validators.required], [this.userNameAsyncValidator]],
@@ -69,7 +65,15 @@ export class AddNamesComponent implements OnInit {
       }, 1000);
     });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.names().subscribe((data: Names[]) => {
+      this.options = data['items'];
+      this.filteredOptions = data['items'];
+      console.log(this.filteredOptions);
+    });
+    this.updateEditCache();
+    // this.filteredOptions = this.options;
+  }
   listOfColumn = [
     {
       title: 'Name',
@@ -142,8 +146,9 @@ export class AddNamesComponent implements OnInit {
     },
   ];
   onChange(value: string): void {
+    console.log(this.filteredOptions);
     // this.options = this.listOfData.map((name) => name.name);
-    this.filteredOptions = this.listOfData.filter(
+    this.filteredOptions = this.options.filter(
       (option) =>
         option.name_EN.toLowerCase().indexOf(value.toLowerCase()) !== -1
     );
@@ -180,7 +185,7 @@ export class AddNamesComponent implements OnInit {
     this.editCache[id].edit = true;
   }
   deleteEdit(id: string): void {
-    const index = this.listOfData.findIndex((item) => item.id === id);
+    const index = this.options.findIndex((item) => item.id === id);
     console.log('i am clicked');
     this.editCache[id] = {
       data: { ...this.listOfData[index] },
@@ -188,23 +193,23 @@ export class AddNamesComponent implements OnInit {
     };
   }
   cancelEdit(id: string): void {
-    const index = this.listOfData.findIndex((item) => item.id === id);
+    const index = this.options.findIndex((item) => item.id === id);
     console.log('i am clicked');
     this.editCache[id] = {
-      data: { ...this.listOfData[index] },
+      data: { ...this.options[index] },
       edit: false,
     };
   }
   saveEdit(id: string): void {
-    const index = this.listOfData.findIndex((item) => item.id === id);
+    const index = this.options.findIndex((item) => item.id === id);
 
-    const dat = Object.assign(this.listOfData[index], this.editCache[id].data);
+    const dat = Object.assign(this.options[index], this.editCache[id].data);
     //call the serivce api to update the data;
     console.log(dat);
     this.editCache[id].edit = false;
   }
   updateEditCache(): void {
-    this.listOfData.forEach((item) => {
+    this.options.forEach((item) => {
       this.editCache[item.id] = {
         edit: false,
         data: { ...item },
@@ -217,7 +222,7 @@ export class AddNamesComponent implements OnInit {
   }
   getNames() {
     this.authService.names().subscribe((data) => {
-      console.log(data);
+      this.options = data['items'];
     });
     // console.log(this.authService.names().subscribe((data) => data));
   }
