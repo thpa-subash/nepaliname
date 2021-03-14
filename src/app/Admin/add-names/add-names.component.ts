@@ -26,22 +26,21 @@ export class AddNamesComponent implements OnInit {
   validateForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
-    // this.filteredOptions = this.options;
-    // this.getNames();
-
+    //edit false at first time
+    this.updateEditCache();
     // initial forms status
     this.validateForm = this.fb.group({
-      name: ['', [Validators.required], [this.userNameAsyncValidator]],
-      nepali: ['', [Validators.required]],
+      name_EN: ['', [Validators.required], [this.userNameAsyncValidator]],
+      name_NP: ['', [Validators.required]],
       gender: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      meaning: ['', [Validators.required]],
     });
   }
   submitForm1(value: {
-    name: string;
-    nepali: string;
+    name_EN: string;
+    name_NP: string;
     gender: string;
-    description: string;
+    meaning: string;
   }): void {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
@@ -71,7 +70,7 @@ export class AddNamesComponent implements OnInit {
       this.filteredOptions = data['items'];
       console.log(this.filteredOptions);
     });
-    this.updateEditCache();
+    // this.updateEditCache();
     // this.filteredOptions = this.options;
   }
   listOfColumn = [
@@ -159,8 +158,10 @@ export class AddNamesComponent implements OnInit {
     this.isVisibleTop = true;
   }
   handleOkAdd(): void {
-    console.log('Button ok clicked!');
-    console.log(this.validateForm.value);
+    this.authService.postName(this.validateForm.value).subscribe((res) => {
+      console.log(this.validateForm.value);
+    });
+    console.log('i am dude' + this.validateForm.value);
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();

@@ -46,15 +46,13 @@ export class AuthService {
     );
   }
   postName(post): Observable<any[]> {
+    console.log(post);
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
     const httpOptions = {
       headers: headers,
     };
-    return this.http.post<any[]>(
-      'https://www.nepalinames.com/api/names/',
-      post
-    );
+    return this.http.post<any[]>('https://www.nepalinames.com/api/names', post);
   }
   update(id, post): Observable<any> {
     return this.http.put<any[]>(
