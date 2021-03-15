@@ -59,7 +59,9 @@ export class AddNamesComponent implements OnInit {
     new Observable((observer: Observer<ValidationErrors | null>) => {
       setTimeout(() => {
         //check the name exist or not
-        if (this.listOfData.map((nam) => nam.name_EN).includes(control.value)) {
+        if (
+          this.filteredOptions.map((nam) => nam.name_EN).includes(control.value)
+        ) {
           // you have to return `{error: true}` to mark it as an error event
           observer.next({ error: true, duplicated: true });
         } else {
@@ -70,11 +72,10 @@ export class AddNamesComponent implements OnInit {
     });
 
   ngOnInit(): void {
-    this.getNames(this.pageIndex, this.pageSize, null, null);
-    console.log(
-      'at first' + this.getNames(this.pageIndex, this.pageSize, null, null)
-    );
+    this.getNames(this.pageIndex, this.pageSize, null, null, '');
+
     this.updateEditCache();
+    console.log(this.options);
     // this.filteredOptions = this.options;
   }
   listOfColumn = [
@@ -149,10 +150,11 @@ export class AddNamesComponent implements OnInit {
       modified: '',
     },
   ];
-  onChange(value: string): void {
-    console.log(this.filteredOptions);
-    // this.options = this.listOfData.map((name) => name.name);
-    this.filteredOptions = this.options.filter(
+  onChange(value: string) {
+    console.log(value);
+    this.getNames(this.pageIndex, this.pageSize, null, null, value);
+
+    let vsal = this.options.filter(
       (option) =>
         option.name_EN.toLowerCase().indexOf(value.toLowerCase()) !== -1
     );
@@ -166,7 +168,7 @@ export class AddNamesComponent implements OnInit {
     this.authService.postName(this.validateForm.value).subscribe((res) => {
       console.log(this.validateForm.value);
     });
-    console.log('i am dude' + this.validateForm.value);
+
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
@@ -178,6 +180,7 @@ export class AddNamesComponent implements OnInit {
     //   this.isVisibleTop = false;
     //   this.validateForm.reset();
     // }
+    this.getNames(this.pageIndex, this.pageSize, null, null, '');
     this.isVisibleTop = false;
     this.validateForm.reset();
   }
@@ -230,27 +233,30 @@ export class AddNamesComponent implements OnInit {
     pageIndex: number,
     pageSize: number,
     sortField: string | null,
-    sortOrder: string | null
+    sortOrder: string | null,
+    search: string | null
   ) {
     this.loading = true;
-    this.authService.names(pageIndex, pageSize, sortField, sortOrder).subscribe(
-      (data) => {
-        this.loading = false;
-        this.total = data['totalCount'];
-        this.options = data['items'];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.authService
+      .names(pageIndex, pageSize, sortField, sortOrder, search)
+      .subscribe(
+        (data) => {
+          this.loading = false;
+          this.total = data['totalCount'];
+          this.filteredOptions = data['items'];
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
+    console.log('i am pagination events' + params);
     const { pageIndex, pageSize, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || null;
     const sortOrder = (currentSort && currentSort.value) || null;
-    this.getNames(pageIndex, pageSize, sortField, sortOrder);
+    this.getNames(pageIndex, pageSize, sortField, sortOrder, '');
   }
 }

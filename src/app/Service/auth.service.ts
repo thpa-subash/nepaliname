@@ -29,13 +29,15 @@ export class AuthService {
     pageIndex: number,
     pageSize: number,
     sortField: string | null,
-    sortOrder: string | null
+    sortOrder: string | null,
+    search: string | null
   ): Observable<Names[]> {
     //control data received from the server
     let params = new HttpParams()
       .append('page', `${pageIndex}`)
       .append('results', `${pageSize}`)
       .append('sortField', `${sortField}`)
+      .append('search', `${search}`)
       .append('sortOrder', `${sortOrder}`);
     //ends
     let headers = new HttpHeaders();
@@ -46,6 +48,7 @@ export class AuthService {
     const httpOptions = {
       headers: headers,
     };
+    console.log(params);
 
     return this.http.get<Names[]>('https://www.nepalinames.com/api/names', {
       params,
