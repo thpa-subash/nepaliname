@@ -1,6 +1,6 @@
 import { authConfig } from './../auth.config';
 import { Names } from './../Model/names';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 import { Injectable } from '@angular/core';
@@ -25,7 +25,19 @@ export class AuthService {
     console.log(this.validUser);
   }
 
-  names(): Observable<Names[]> {
+  names(
+    pageIndex: number,
+    pageSize: number,
+    sortField: string | null,
+    sortOrder: string | null
+  ): Observable<Names[]> {
+    //control data received from the server
+    let params = new HttpParams()
+      .append('page', `${pageIndex}`)
+      .append('results', `${pageSize}`)
+      .append('sortField', `${sortField}`)
+      .append('sortOrder', `${sortOrder}`);
+    //ends
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
     // request.setRequestHeader('Content-type', 'application/json');
@@ -34,16 +46,10 @@ export class AuthService {
     const httpOptions = {
       headers: headers,
     };
-    console.log(
-      this.http.get<Names[]>(
-        'https://www.nepalinames.com/api/names',
-        httpOptions
-      )
-    );
-    return this.http.get<Names[]>(
-      'https://www.nepalinames.com/api/names',
-      httpOptions
-    );
+
+    return this.http.get<Names[]>('https://www.nepalinames.com/api/names', {
+      params,
+    });
   }
   postName(post): Observable<any[]> {
     console.log(post);
@@ -60,6 +66,7 @@ export class AuthService {
       JSON.stringify(post)
     );
   }
+
   //check user is valid or not
   ValidUser(data) {
     console.log('from service' + data);

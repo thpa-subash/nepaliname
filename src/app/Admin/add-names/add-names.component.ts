@@ -9,13 +9,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
-
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
 @Component({
   selector: 'app-add-names',
   templateUrl: './add-names.component.html',
   styleUrls: ['./add-names.component.css'],
 })
 export class AddNamesComponent implements OnInit {
+  total = 1;
+  loading = true;
+  pageSize = 10;
+  pageIndex = 1;
   inputValue?: string;
   options: Names[] = [];
   newData: Names[] = [];
@@ -27,6 +31,7 @@ export class AddNamesComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     //edit false at first time
+
     this.updateEditCache();
     // initial forms status
     this.validateForm = this.fb.group({
@@ -65,18 +70,18 @@ export class AddNamesComponent implements OnInit {
     });
 
   ngOnInit(): void {
-    this.authService.names().subscribe((data: Names[]) => {
-      this.options = data['items'];
-      this.filteredOptions = data['items'];
-      console.log(this.filteredOptions);
-    });
-    // this.updateEditCache();
+    this.getNames(this.pageIndex, this.pageSize, null, null);
+    console.log(
+      'at first' + this.getNames(this.pageIndex, this.pageSize, null, null)
+    );
+    this.updateEditCache();
     // this.filteredOptions = this.options;
   }
   listOfColumn = [
     {
       title: 'Name',
-
+      sortOrder: 'descend',
+      sortFn: null,
       priority: 3,
     },
     {
@@ -221,10 +226,31 @@ export class AddNamesComponent implements OnInit {
   approve(id: number) {
     console.log('i am approve name' + id);
   }
-  getNames() {
-    this.authService.names().subscribe((data) => {
-      this.options = data['items'];
-    });
-    // console.log(this.authService.names().subscribe((data) => data));
+  getNames(
+    pageIndex: number,
+    pageSize: number,
+    sortField: string | null,
+    sortOrder: string | null
+  ) {
+    this.loading = true;
+    this.authService.names(pageIndex, pageSize, sortField, sortOrder).subscribe(
+      (data) => {
+        this.loading = false;
+        this.total = data['totalCount'];
+        this.options = data['items'];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams): void {
+    console.log(params);
+    const { pageIndex, pageSize, sort } = params;
+    const currentSort = sort.find((item) => item.value !== null);
+    const sortField = (currentSort && currentSort.key) || null;
+    const sortOrder = (currentSort && currentSort.value) || null;
+    this.getNames(pageIndex, pageSize, sortField, sortOrder);
   }
 }

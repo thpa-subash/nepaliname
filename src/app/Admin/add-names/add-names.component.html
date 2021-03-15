@@ -2,13 +2,7 @@
   <div class="name-header">
     <h2 nz-typography>NEPALI NAMES</h2>
     <div class="add-button">
-      <button
-        nz-button
-        nzType="primary"
-        nzSize="large"
-        nzShape="round"
-        (click)="getNames()"
-      >
+      <button nz-button nzType="primary" nzSize="large" nzShape="round">
         Fetch Names</button
       >&nbsp;&nbsp;
       <button
@@ -137,6 +131,13 @@
       nzBordered
       [nzData]="filteredOptions"
       nzTableLayout="fixed"
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      (nzQueryParams)="onQueryParamsChange($event)"
     >
       <thead>
         <tr>

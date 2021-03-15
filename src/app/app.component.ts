@@ -90,9 +90,7 @@ export class AppComponent {
   refresh() {
     this.oauthService.silentRefresh();
   }
-  getNames() {
-    console.log(this.authService.names().subscribe((data) => data));
-  }
+
   public get name() {
     let claims = this.oauthService.getIdentityClaims();
     console.log('get names' + claims);

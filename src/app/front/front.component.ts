@@ -17,7 +17,7 @@ import {
 export class FrontComponent implements OnInit {
   validUser = true;
   get token() {
-    console.log(this.oauthService.getAccessToken());
+    // console.log(this.oauthService.getAccessToken());
     return this.oauthService.getAccessToken();
   }
   get claims() {
